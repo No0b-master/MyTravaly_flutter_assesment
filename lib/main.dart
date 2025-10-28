@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
+import 'package:mytravaly_flutter_assesment/Screens/search_hotel_list.dart';
 import 'package:provider/provider.dart';
 import 'Constants/routes.dart';
 import 'CustomUI/theme/app_theme.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SessionManager.setString(Prefs.authToken, "71523fdd8d26f585315b4233e39d9263");
+
     final themeManager = Provider.of<ThemeManager>(context);
 
     return MaterialApp(
@@ -37,7 +40,8 @@ class MyApp extends StatelessWidget {
 
       routes: {
         Routes.login : (context) => Login(),
-        Routes.home : (context) => Home()
+        Routes.home : (context) => Home(),
+        Routes.searchHotelList : (context) => HotelListPage()
       },
     );
   }

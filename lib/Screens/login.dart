@@ -6,8 +6,10 @@ import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/custom_button
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/page_view.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/custom_colors.dart';
 import 'package:mytravaly_flutter_assesment/Utils/enums/button_type.dart';
+import 'package:mytravaly_flutter_assesment/Utils/helpers/snackbar_message.dart';
 import 'package:mytravaly_flutter_assesment/Utils/shared_preferences.dart';
 import '../CustomUI/curve_container.dart';
+import '../services/register_device_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,17 +21,32 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool _isLoading = false;
 
-  void _simulateGoogleSignIn() async {
+  Future<void> _simulateGoogleSignIn() async {
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      _isLoading = false;
-      SessionManager.setBoolean(Prefs.isLoggedIn, true);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        Routes.home,
-            (Route<dynamic> route) => false,
-      );
-    });
+
+    try {
+      ///Regstring device
+      final registered = await RegisterDeviceService.registerDevice();
+
+      if (registered) {
+        await Future.delayed(const Duration(seconds: 1));
+        await SessionManager.setBoolean(Prefs.isLoggedIn, true);
+
+        if (mounted) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            Routes.home,
+                (Route<dynamic> route) => false,
+          );
+        }
+      } else {
+        showSnackBarMessage(context: context, message: "Device registration failed. Please try again.") ;
+
+      }
+    } catch (e) {
+      print("SignIn Error: $e");
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -61,11 +78,11 @@ class _LoginState extends State<Login> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: isDark
-                          ? CustomColors.darkBackground.withOpacity(0.9)
+                          ? CustomColors.darkBackground.withValues(alpha:0.9)
                           : CustomColors.lightBackground,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
+                          color: Colors.black.withValues(alpha:0.15),
                           blurRadius: 10,
                           spreadRadius: 2,
                           offset: const Offset(0, -2),
@@ -91,8 +108,8 @@ class _LoginState extends State<Login> {
                           "Sign in to continue with your Google account",
                           style: GoogleFonts.poppins(
                             color: isDark
-                                ? CustomColors.lightText.withOpacity(0.7)
-                                : CustomColors.darkText.withOpacity(0.7),
+                                ? CustomColors.lightText.withValues(alpha:0.7)
+                                : CustomColors.darkText.withValues(alpha:0.7),
                             fontSize: 14,
                           ),
                           textAlign: TextAlign.center,
@@ -118,8 +135,8 @@ class _LoginState extends State<Login> {
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             color: isDark
-                                ? CustomColors.lightText.withOpacity(0.6)
-                                : CustomColors.darkText.withOpacity(0.6),
+                                ? CustomColors.lightText.withValues(alpha:0.6)
+                                : CustomColors.darkText.withValues(alpha:0.6),
                           ),
                         ),
                         const SizedBox(height: 20),

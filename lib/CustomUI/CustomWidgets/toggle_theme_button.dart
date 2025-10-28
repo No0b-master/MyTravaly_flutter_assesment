@@ -63,14 +63,14 @@ class _ThemeToggleState extends State<ThemeToggle>
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: themeManager.isDarkMode
-                      ? Colors.amber.withOpacity(0.2)
-                      : Colors.indigo.withOpacity(0.2),
+                      ? Colors.amber.withValues(alpha:0.2)
+                      : Colors.indigo.withValues(alpha:0.2),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
                       color: themeManager.isDarkMode
-                          ? Colors.orangeAccent.withOpacity(0.4)
-                          : Colors.indigoAccent.withOpacity(0.4),
+                          ? Colors.orangeAccent.withValues(alpha:0.4)
+                          : Colors.indigoAccent.withValues(alpha:0.4),
                       blurRadius: 10,
                       offset: const Offset(0, 3),
                     ),

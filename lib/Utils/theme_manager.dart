@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
 import 'package:mytravaly_flutter_assesment/Utils/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeManager extends ChangeNotifier {
   bool _isDarkMode = false;

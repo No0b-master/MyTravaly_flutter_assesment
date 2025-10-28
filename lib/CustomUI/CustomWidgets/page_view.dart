@@ -3,11 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/text_view.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/toggle_theme_button.dart';
-import 'package:mytravaly_flutter_assesment/Utils/enums/snackbar_type.dart';
 import 'package:mytravaly_flutter_assesment/Utils/helpers/dialog.dart';
-import 'package:mytravaly_flutter_assesment/Utils/helpers/snackbar_message.dart';
 import 'package:mytravaly_flutter_assesment/Utils/shared_preferences.dart';
-
 import '../../Constants/routes.dart';
 import '../../Utils/enums/dialog_type.dart';
 import '../custom_colors.dart';

@@ -36,8 +36,7 @@ class CustomButton extends StatelessWidget {
         return Colors.transparent;
       case ButtonType.danger:
         return CustomColors.warning;
-      default:
-        return theme.colorScheme.primary;
+
     }
   }
 
@@ -87,7 +86,7 @@ class CustomButton extends StatelessWidget {
           boxShadow: [
             if (theme.brightness == Brightness.light)
               BoxShadow(
-                color: Colors.grey.withOpacity(0.25),
+                color: Colors.grey.withValues(alpha:0.25),
                 offset: const Offset(0, 4),
                 blurRadius: 8,
               ),
