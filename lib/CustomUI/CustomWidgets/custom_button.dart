@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final IconData? suffixIcon;
   final String? prefixImage;
   final ButtonType type;
+  final double? width;
 
   const CustomButton({
     super.key,
@@ -18,55 +19,78 @@ class CustomButton extends StatelessWidget {
     this.suffixIcon,
     this.prefixImage,
     this.type = ButtonType.primary,
+    this.width,
   });
 
-  Color _getBackgroundColor() {
+  /// Returns color according to the theme and button type
+  Color _getBackgroundColor(BuildContext context) {
+    final theme = Theme.of(context);
     switch (type) {
       case ButtonType.primary:
-        return CustomColors.primary; // Blue
+        return theme.colorScheme.primary;
       case ButtonType.secondary:
-        return CustomColors.secondary; // Blue
-      case ButtonType.outline:
-        return CustomColors.outline; // Blue
+        return theme.colorScheme.secondary;
       case ButtonType.warning:
-        return CustomColors.warning; // Blue
+        return CustomColors.warning;
+      case ButtonType.outline:
+        return Colors.transparent;
       case ButtonType.danger:
-        return CustomColors.danger; // Blue
+        return CustomColors.warning;
+      default:
+        return theme.colorScheme.primary;
     }
   }
 
-  Color _getTextColor() {
+  Color _getTextColor(BuildContext context) {
+    final theme = Theme.of(context);
     switch (type) {
       case ButtonType.warning:
-        return Colors.black87;
+        return theme.brightness == Brightness.dark
+            ? CustomColors.black
+            : Colors.black87;
       case ButtonType.outline:
-        return Colors.black87;
+        return theme.brightness == Brightness.dark
+            ? CustomColors.white
+            : Colors.black87;
       default:
-        return Colors.white;
+        return CustomColors.white;
     }
+  }
+
+  Border? _getBorder(BuildContext context) {
+    final theme = Theme.of(context);
+    if (type == ButtonType.outline) {
+      return Border.all(
+        color: theme.colorScheme.primary,
+        width: 1.5,
+      );
+    }
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
+        width: width,
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: _getBackgroundColor(),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: CustomColors.darkGrey,
-            width: 1, // Border thickness
-          ),
+          color: _getBackgroundColor(context),
+          borderRadius: BorderRadius.circular(12),
+          border: _getBorder(context),
           boxShadow: [
-            BoxShadow(
-              color: CustomColors.lightGrey,
-              offset: const Offset(0, 5),
-              blurRadius: 10,
-              spreadRadius: 5
-            ),
+            if (theme.brightness == Brightness.light)
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                offset: const Offset(0, 4),
+                blurRadius: 8,
+              ),
           ],
         ),
         child: Row(
@@ -83,7 +107,7 @@ class CustomButton extends StatelessWidget {
               const SizedBox(width: 8),
             ],
             if (prefixIcon != null) ...[
-              Icon(prefixIcon, color: _getTextColor(), size: 20),
+              Icon(prefixIcon, color: _getTextColor(context), size: 20),
               const SizedBox(width: 8),
             ],
             Flexible(
@@ -91,7 +115,7 @@ class CustomButton extends StatelessWidget {
                 text,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: _getTextColor(),
+                  color: _getTextColor(context),
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.3,
@@ -100,7 +124,7 @@ class CustomButton extends StatelessWidget {
             ),
             if (suffixIcon != null) ...[
               const SizedBox(width: 8),
-              Icon(suffixIcon, color: _getTextColor(), size: 20),
+              Icon(suffixIcon, color: _getTextColor(context), size: 20),
             ],
           ],
         ),

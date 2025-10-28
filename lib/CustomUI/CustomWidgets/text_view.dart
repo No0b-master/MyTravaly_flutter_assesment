@@ -40,13 +40,11 @@ class TextView extends StatelessWidget {
         return GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          color: CustomColors.darkGrey,
         );
       case TextType.smallText:
         return GoogleFonts.poppins(
           fontSize: 13,
           fontWeight: FontWeight.w400,
-          color: CustomColors.darkGrey,
         );
     }
   }
