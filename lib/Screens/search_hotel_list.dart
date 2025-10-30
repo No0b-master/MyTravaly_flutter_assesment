@@ -53,7 +53,7 @@ class _HotelListPageState extends State<HotelListPage> {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: theme.brightness == Brightness.dark ? 0 : 3,
-      shadowColor: theme.shadowColor.withOpacity(0.2),
+      shadowColor: theme.shadowColor.withValues(alpha: 0.2),
       child: ListTile(
         leading: Icon(
           Icons.hotel,
@@ -74,7 +74,7 @@ class _HotelListPageState extends State<HotelListPage> {
             hotel.country,
           ].where((e) => e != null && e.isNotEmpty).join(', '),
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.7),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
           ),
         ),
         onTap: () {
@@ -98,12 +98,12 @@ class _HotelListPageState extends State<HotelListPage> {
             decoration: InputDecoration(
               hintText: "Search by hotel name, city, state or country",
               hintStyle: TextStyle(
-                color: theme.colorScheme.onSurface.withOpacity(0.6),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               ),
               prefixIcon: Icon(Icons.search,
-                  color: theme.colorScheme.onSurface.withOpacity(0.7)),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
               filled: true,
-              fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+              fillColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -111,7 +111,7 @@ class _HotelListPageState extends State<HotelListPage> {
               suffixIcon: _searchController.text.isNotEmpty
                   ? IconButton(
                 icon: Icon(Icons.clear,
-                    color: theme.colorScheme.onSurface.withOpacity(0.6)),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                 onPressed: () {
                   _searchController.clear();
                   setState(() {
@@ -130,7 +130,7 @@ class _HotelListPageState extends State<HotelListPage> {
             child: Text(
               "Start searching for hotels",
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onBackground.withOpacity(0.7),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           )
@@ -154,8 +154,8 @@ class _HotelListPageState extends State<HotelListPage> {
                   child: Text(
                     "No hotels found",
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onBackground
-                          .withOpacity(0.7),
+                      color: theme.colorScheme.onSurface
+                          .withValues(alpha: 0.7),
                     ),
                   ),
                 );

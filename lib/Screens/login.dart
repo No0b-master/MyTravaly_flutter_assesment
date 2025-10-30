@@ -94,7 +94,7 @@ class _LoginState extends State<Login> {
                       children: [
                         const SizedBox(height: 120),
                         Text(
-                          "Welcome Back 👋",
+                          "Welcome Back",
                           style: GoogleFonts.poppins(
                             color: isDark
                                 ? CustomColors.secondary

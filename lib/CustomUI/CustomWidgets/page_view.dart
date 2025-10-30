@@ -19,10 +19,13 @@ class CustomPageView extends StatelessWidget {
       top: false,
 
       child: Scaffold(
-        floatingActionButton: ThemeToggle(),
         appBar: AppBar(
+
+
           actions: SessionManager.getBoolean(Prefs.isLoggedIn) == true
               ? [
+            ThemeToggle(),
+                  SizedBox(width: 10),
                   Padding(
                     padding: const EdgeInsets.only(right: 18.0),
                     child: GestureDetector(
@@ -46,11 +49,12 @@ class CustomPageView extends StatelessWidget {
           backgroundColor: CustomColors.orange,
           centerTitle: true,
           title: TextView(
+
             text: "MyTravaly",
             customStyle: GoogleFonts.robotoSerif(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: CustomColors.white,
+              color: CustomColors.orange,
             ),
           ),
         ),

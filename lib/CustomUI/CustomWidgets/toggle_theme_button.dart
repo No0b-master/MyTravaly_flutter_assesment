@@ -61,27 +61,27 @@ class _ThemeToggleState extends State<ThemeToggle>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: themeManager.isDarkMode
-                      ? Colors.amber.withValues(alpha:0.2)
-                      : Colors.indigo.withValues(alpha:0.2),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: themeManager.isDarkMode
-                          ? Colors.orangeAccent.withValues(alpha:0.4)
-                          : Colors.indigoAccent.withValues(alpha:0.4),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
+                // decoration: BoxDecoration(
+                //   color: themeManager.isDarkMode
+                //       ? Colors.amber.withValues(alpha:0.2)
+                //       : Colors.indigo.withValues(alpha:0.2),
+                //   shape: BoxShape.circle,
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: themeManager.isDarkMode
+                //           ? Colors.orangeAccent.withValues(alpha:0.4)
+                //           : Colors.indigoAccent.withValues(alpha:0.4),
+                //       blurRadius: 10,
+                //       offset: const Offset(0, 3),
+                //     ),
+                //   ],
+                // ),
                 child: Icon(
                   themeManager.isDarkMode ? Icons.nightlight_round : Icons.wb_sunny,
                   size: 30,
                   color: themeManager.isDarkMode
                       ? Colors.amberAccent
-                      : Colors.indigoAccent,
+                      : Colors.white,
                 ),
               ),
             ),

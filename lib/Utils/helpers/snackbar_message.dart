@@ -32,6 +32,7 @@ void showSnackBarMessage({
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     elevation: 0,
+
     duration: const Duration(seconds: 3),
     content: TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.0, end: 1.0),
