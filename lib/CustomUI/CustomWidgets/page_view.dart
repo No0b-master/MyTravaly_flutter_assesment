@@ -53,9 +53,7 @@ class CustomPageView extends StatelessWidget {
             text: "MyTravaly",
             customStyle: GoogleFonts.robotoSerif(
               fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: CustomColors.orange,
-            ),
+              fontWeight: FontWeight.bold),
           ),
         ),
         body: child,

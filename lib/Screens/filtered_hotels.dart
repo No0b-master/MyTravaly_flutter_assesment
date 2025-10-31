@@ -9,6 +9,8 @@ class FilteredHotels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return CustomPageView(
       child: FutureBuilder<List<FilteredHotelModel>?>(
         future: filteredHotelFuture,
@@ -21,7 +23,7 @@ class FilteredHotels extends StatelessWidget {
             return Center(
               child: Text(
                 "Something went wrong 😞",
-                style: Theme.of(context).textTheme.titleMedium,
+                style: theme.textTheme.titleMedium,
               ),
             );
           }
@@ -45,38 +47,40 @@ class FilteredHotels extends StatelessWidget {
   }
 
   Widget _buildHotelCard(BuildContext context, FilteredHotelModel hotel) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.07),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
+          if (!isDark)
+            BoxShadow(
+              color: Colors.black.withOpacity(0.07),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
         ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          // Handle navigation to detail page
-        },
+        onTap: () => _showHotelDetails(context, hotel),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // --- Image and Rating Badge ---
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16),
-                  ),
+                  borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Image.network(
-                      hotel.propertyImage.isNotEmpty
-                          ? hotel.propertyImage
+                      hotel.propertyImage.fullUrl.isNotEmpty
+                          ? hotel.propertyImage.fullUrl
                           : "https://via.placeholder.com/400x200.png?text=No+Image",
                       fit: BoxFit.cover,
                     ),
@@ -94,11 +98,12 @@ class FilteredHotels extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.star,
-                            color: Colors.amber, size: 16),
+                        const Icon(Icons.star, color: Colors.amber, size: 16),
                         const SizedBox(width: 4),
                         Text(
-                          hotel.rating.toStringAsFixed(1),
+                          hotel.googleReview?.data?.overallRating
+                              .toStringAsFixed(1) ??
+                              "N/A",
                           style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
@@ -110,6 +115,7 @@ class FilteredHotels extends StatelessWidget {
               ],
             ),
 
+            // --- Basic Info ---
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -118,21 +124,26 @@ class FilteredHotels extends StatelessWidget {
                 children: [
                   Text(
                     hotel.propertyName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(Icons.location_on_outlined, size: 16),
                       const SizedBox(width: 4),
-                      Text(
-                        hotel.city,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500),
+                      Expanded(
+                        child: Text(
+                          hotel.propertyAddress.city.isNotEmpty
+                              ? hotel.propertyAddress.city
+                              : "Unknown Location",
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
@@ -140,15 +151,19 @@ class FilteredHotels extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "₹${hotel.price.toStringAsFixed(0)}",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        "${hotel.propertyMinPrice.currencySymbol}${hotel.propertyMinPrice.amount.toStringAsFixed(0)}",
+                        style: theme.textTheme.titleMedium?.copyWith(
                           color: Colors.green.shade700,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Text("/ night",
-                          style: TextStyle(color: Colors.grey, fontSize: 13)),
+                      Text(
+                        "/ night",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -156,6 +171,132 @@ class FilteredHotels extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// --- Modal Bottom Sheet with full hotel details ---
+  void _showHotelDetails(BuildContext context, FilteredHotelModel hotel) {
+    final theme = Theme.of(context);
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: theme.colorScheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.8,
+        minChildSize: 0.4,
+        maxChildSize: 0.95,
+        builder: (context, scrollController) {
+          return SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: theme.dividerColor,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+                Text(
+                  hotel.propertyName,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  hotel.propertyAddress.mapAddress,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    hotel.propertyImage.fullUrl.isNotEmpty
+                        ? hotel.propertyImage.fullUrl
+                        : "https://via.placeholder.com/400x200.png?text=No+Image",
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                _infoTile("City", hotel.propertyAddress.city),
+                _infoTile("Country", hotel.propertyAddress.country),
+                _infoTile("Room", hotel.roomName),
+                _infoTile("Adults", hotel.numberOfAdults.toString()),
+                _infoTile("Property Type", hotel.propertyType),
+                _infoTile("Stars", "${hotel.propertyStar} ⭐"),
+                _infoTile("Google Rating",
+                    "${hotel.googleReview?.data?.overallRating ?? 'N/A'} (${hotel.googleReview?.data?.totalUserRating ?? 0} reviews)"),
+
+                const Divider(height: 24),
+
+                Text("Available Deals",
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                if (hotel.availableDeals.isEmpty)
+                  Text("No deals available",
+                      style: theme.textTheme.bodyMedium)
+                else
+                  ...hotel.availableDeals.map((deal) => ListTile(
+                    title: Text(deal.headerName),
+                    subtitle: Text(deal.dealType),
+                    trailing: Text(
+                      "${deal.price.currencySymbol}${deal.price.amount.toStringAsFixed(0)}",
+                      style: TextStyle(
+                        color: Colors.green.shade700,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )),
+
+                const Divider(height: 24),
+
+                Text("Price Details",
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                _infoTile("Marked Price",
+                    "${hotel.markedPrice.currencySymbol}${hotel.markedPrice.amount}"),
+                _infoTile("Min Price",
+                    "${hotel.propertyMinPrice.currencySymbol}${hotel.propertyMinPrice.amount}"),
+                _infoTile("Max Price",
+                    "${hotel.propertyMaxPrice.currencySymbol}${hotel.propertyMaxPrice.amount}"),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _infoTile(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+              flex: 3,
+              child: Text(label,
+                  style: const TextStyle(fontWeight: FontWeight.w600))),
+          Expanded(flex: 4, child: Text(value, overflow: TextOverflow.ellipsis)),
+        ],
       ),
     );
   }

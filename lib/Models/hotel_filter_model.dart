@@ -1,4 +1,6 @@
+import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
 import 'package:mytravaly_flutter_assesment/Utils/helpers/date_formator.dart';
+import 'package:mytravaly_flutter_assesment/Utils/shared_preferences.dart';
 
 class HotelFilter {
   DateTime? checkIn;
@@ -51,7 +53,7 @@ class HotelFilter {
       "lowPrice": lowPrice,
       "highPrice": highPrice,
       "limit": limit,
-      "currency": currency,
+      "currency": SessionManager.getString(Prefs.currency),
     };
   }
 }

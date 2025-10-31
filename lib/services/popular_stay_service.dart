@@ -22,7 +22,7 @@ class PopularStayService {
             "city": "Jamshedpur"
           }
         },
-        "currency": "INR"
+        "currency": SessionManager.getString(Prefs.currency)
       }
     };
 

@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mytravaly_flutter_assesment/Constants/webservices.dart';
 import '../../Constants/prefs.dart';
 import '../../Utils/shared_preferences.dart';
+import '../../provider/currency_provider.dart';
 
 class CurrencyDropdown extends StatefulWidget {
-  const CurrencyDropdown({super.key});
+  final Function(String val) onCurrencyChange ;
+  const CurrencyDropdown({super.key, required this.onCurrencyChange});
 
   @override
   State<CurrencyDropdown> createState() => _CurrencyDropdownState();
@@ -76,20 +79,26 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
   Future<void> onCurrencySelected(String value) async {
     setState(() {
       selectedCurrency = value;
+
     });
+    widget.onCurrencyChange(value);
     await SessionManager.setString(Prefs.currency, value);
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    // 🔹 Shimmer while loading
+    // Access provider
+    final currencyProvider = Provider.of<CurrencyProvider>(context);
+    final selectedCurrency = currencyProvider.currencyCode;
+
     if (isLoading) {
       return Shimmer.fromColors(
-        baseColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        highlightColor: theme.colorScheme.surface.withValues(alpha: 0.8),
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
         child: Container(
           width: 150,
           height: 50,
@@ -152,8 +161,9 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
           );
         }).toList(),
         onChanged: (value) {
-          if (value != null) onCurrencySelected(value);
-        },
+          onCurrencySelected(value!);
+          currencyProvider.setCurrency(value); // 🔹 Update globally
+                },
       ),
     );
   }

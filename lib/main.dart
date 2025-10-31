@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
 import 'package:mytravaly_flutter_assesment/Screens/search_hotel_list.dart';
+import 'package:mytravaly_flutter_assesment/provider/currency_provider.dart';
 import 'package:provider/provider.dart';
 import 'Constants/routes.dart';
 import 'CustomUI/theme/app_theme.dart';
@@ -12,9 +13,13 @@ import 'Utils/theme_manager.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SessionManager.init();
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeManager(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
+        ChangeNotifierProvider(create: (_) => CurrencyProvider()), // 🔹 Added here
+      ],
       child: const MyApp(),
     ),
   );
