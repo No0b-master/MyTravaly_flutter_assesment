@@ -4,6 +4,7 @@ import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/custom_button
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/filter_bottom_sheet.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/page_view.dart';
 import 'package:mytravaly_flutter_assesment/Models/filtered_hotel_model.dart';
+import 'package:mytravaly_flutter_assesment/Screens/filtered_hotels.dart';
 import 'package:mytravaly_flutter_assesment/Utils/enums/button_type.dart';
 import 'package:mytravaly_flutter_assesment/Utils/helpers/date_formator.dart';
 import '../../Services/popular_stay_service.dart';
@@ -61,7 +62,12 @@ class _HomeState extends State<Home> {
 
                 setState(() {
                   _filter = updatedFilter;
+
                   _hotelsFuture = HotelService.fetchHotels(filter: _filter, context: context);
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> FilteredHotels(
+                    filteredHotelFuture: _hotelsFuture,
+
+                  ))) ;
                 });
               },
             ),
