@@ -67,7 +67,9 @@ You can directly install and test the app using the pre-built APK:
 
 **Ahmad Mohd**
 📧 [ahmadaug20@gmail.com](mailto:ahmadaug20@gmail.com)
+
 🔗 [LinkedIn Profile](https://www.linkedin.com/in/ahmad-mohd)
+
 💻 [GitHub Profile](https://github.com/No0b-master)
 
 ---
@@ -81,10 +83,7 @@ You can directly install and test the app using the pre-built APK:
 ---
 
 ## 📸 Screenshots
-
-![img.png](img.png) ![img_1.png](img_1.png) ![img_2.png](img_2.png) ![img_3.png](img_3.png) ![img_4.png](img_4.png)
-![img_5.png](img_5.png) ![img_6.png](img_6.png)
-
+<p align="center"> <img src="img.png" alt="Screenshot 1" width="200"/> <img src="img_1.png" alt="Screenshot 2" width="200"/> <img src="img_2.png" alt="Screenshot 3" width="200"/> <img src="img_3.png" alt="Screenshot 4" width="200"/> <img src="img_4.png" alt="Screenshot 5" width="200"/> </p> <p align="center"> <img src="img_5.png" alt="Screenshot 6" width="200"/> <img src="img_6.png" alt="Screenshot 7" width="200"/> </p>
 
 ---
 
