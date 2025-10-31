@@ -73,6 +73,7 @@ flutter:
     - assets/images/no_image.jpg
     - assets/animations/warning.json
     - assets/animations/info.json
+    - assets/animations/loader.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

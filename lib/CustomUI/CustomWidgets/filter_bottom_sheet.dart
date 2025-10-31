@@ -129,6 +129,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           const Divider(height: 24),
 
+
+
+
           // --- Room, adults, children ---
           _buildStepper("Rooms", _rooms, (val) => setState(() => _rooms = val)),
           _buildStepper("Adults", _adults, (val) => setState(() => _adults = val)),

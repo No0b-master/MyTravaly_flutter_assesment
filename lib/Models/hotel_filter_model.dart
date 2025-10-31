@@ -44,7 +44,7 @@ class HotelFilter {
       "adults": adults,
       "children": children,
       "accommodation": accommodation,
-      "searchQuery" : searchQuery ?? [""],
+      "searchQuery" : searchQuery ?? ["qyhZqzVt"],
       "searchType" : searchType,
       "preloaderList": [],
       "rid": rid ,

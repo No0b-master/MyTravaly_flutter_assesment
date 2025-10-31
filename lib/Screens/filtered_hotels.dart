@@ -44,7 +44,6 @@ class FilteredHotels extends StatelessWidget {
     );
   }
 
-  /// 🧱 Hotel Card UI
   Widget _buildHotelCard(BuildContext context, FilteredHotelModel hotel) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -67,7 +66,6 @@ class FilteredHotels extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// 📸 Image with rounded corners + rating badge
             Stack(
               children: [
                 ClipRRect(
@@ -112,7 +110,6 @@ class FilteredHotels extends StatelessWidget {
               ],
             ),
 
-            /// 🏨 Hotel Info Section
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -163,7 +160,6 @@ class FilteredHotels extends StatelessWidget {
     );
   }
 
-  /// 💫 Shimmer Loader while fetching
   Widget _buildShimmerList() {
     return ListView.builder(
       padding: const EdgeInsets.all(16),

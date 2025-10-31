@@ -6,6 +6,7 @@ import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/custom_button
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/page_view.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/custom_colors.dart';
 import 'package:mytravaly_flutter_assesment/Utils/enums/button_type.dart';
+import 'package:mytravaly_flutter_assesment/Utils/helpers/loader.dart';
 import 'package:mytravaly_flutter_assesment/Utils/helpers/snackbar_message.dart';
 import 'package:mytravaly_flutter_assesment/Utils/shared_preferences.dart';
 import '../CustomUI/curve_container.dart';
@@ -118,9 +119,7 @@ class _LoginState extends State<Login> {
 
                         /// Sign-in button
                         _isLoading
-                            ? const CircularProgressIndicator(
-                          color: CustomColors.accent,
-                        )
+                            ? CustomLoader()
                             : CustomButton(
                           text: "Sign in with Google",
                           onPressed: _simulateGoogleSignIn,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/page_view.dart';
+import 'package:mytravaly_flutter_assesment/Utils/helpers/loader.dart';
 import '../../models/hotel_model.dart';
 import '../services/search_services.dart';
 
@@ -138,7 +139,7 @@ class _HotelListPageState extends State<HotelListPage> {
             future: _futureHotels,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CustomLoader());
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text(

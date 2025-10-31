@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytravaly_flutter_assesment/Constants/routes.dart';
+import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/currency_dropdown.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/custom_button.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/filter_bottom_sheet.dart';
 import 'package:mytravaly_flutter_assesment/CustomUI/CustomWidgets/page_view.dart';
@@ -7,6 +8,7 @@ import 'package:mytravaly_flutter_assesment/Models/filtered_hotel_model.dart';
 import 'package:mytravaly_flutter_assesment/Screens/filtered_hotels.dart';
 import 'package:mytravaly_flutter_assesment/Utils/enums/button_type.dart';
 import 'package:mytravaly_flutter_assesment/Utils/helpers/date_formator.dart';
+import 'package:mytravaly_flutter_assesment/Utils/helpers/loader.dart';
 import '../../Services/popular_stay_service.dart';
 import '../Models/hotel_filter_model.dart';
 import '../Models/popular_stays_model.dart';
@@ -32,6 +34,7 @@ class _HomeState extends State<Home> {
     arrayOfExcludedSearchType: [],
     rid: 0,
     limit: 5,
+
     preloaderList: [],
     searchType: 'hotelIdSearch',
   );
@@ -92,13 +95,13 @@ class _HomeState extends State<Home> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Popular Stays",
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onBackground,
-                  ),
-                ),
+                // Text(
+                //   "Popular Stays",
+                //   style: theme.textTheme.headlineSmall?.copyWith(
+                //     fontWeight: FontWeight.bold,
+                //     color: theme.colorScheme.onBackground,
+                //   ),
+                // ),
                 Row(
                   children: [
                     CustomButton(
@@ -120,6 +123,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
+                CurrencyDropdown()
               ],
             ),
           ),
@@ -130,7 +134,7 @@ class _HomeState extends State<Home> {
               future: _futureStays,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CustomLoader());
                 }
                 if (snapshot.hasError) {
                   return Center(
@@ -202,7 +206,7 @@ class _HomeState extends State<Home> {
                                         color: theme.colorScheme.surfaceVariant
                                             .withOpacity(0.3),
                                         child: const Center(
-                                          child: CircularProgressIndicator(),
+                                          child: CustomLoader(),
                                         ),
                                       );
                                     },
