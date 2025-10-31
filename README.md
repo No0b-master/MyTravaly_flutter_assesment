@@ -1,9 +1,4 @@
-Here’s a **clean, professional, copy-ready README.md** for your Flutter project 👇
-
----
-
-````markdown
-# 🏨 MyTravaly Flutter Assessment
+# MyTravaly Flutter Assessment
 
 A Flutter application developed as part of the **MyTravaly Assessment**, implementing all APIs shared in the Postman collection with additional enhanced features such as **Dark Mode**, **Dynamic Currency Selection**, and **Device Registration**.  
 The app follows a **clean MVVC architecture** and is well-structured for scalability and maintainability.
