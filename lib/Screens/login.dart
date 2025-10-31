@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mytravaly_flutter_assesment/Constants/prefs.dart';
@@ -119,7 +120,7 @@ class _LoginState extends State<Login> {
 
                         /// Sign-in button
                         _isLoading
-                            ? CustomLoader()
+                            ? CupertinoActivityIndicator()
                             : CustomButton(
                           text: "Sign in with Google",
                           onPressed: _simulateGoogleSignIn,
