@@ -34,25 +34,24 @@ The app follows a **clean MVVC architecture** and is well-structured for scalabi
 1. **Clone the repository**
    ```bash
    git clone https://github.com/No0b-master/MyTravaly_flutter_assesment.git
-````
-
+   
 2. **Navigate to project directory**
 
    ```bash
    cd MyTravaly_flutter_assesment
-   ```
+   
 
 3. **Get dependencies**
 
    ```bash
    flutter pub get
-   ```
+
 
 4. **Run the app**
 
    ```bash
    flutter run
-   ```
+
 
 ---
 
@@ -85,6 +84,8 @@ You can directly install and test the app using the pre-built APK:
 
 ![img.png](img.png) ![img_1.png](img_1.png) ![img_2.png](img_2.png) ![img_3.png](img_3.png) ![img_4.png](img_4.png)
 ![img_5.png](img_5.png) ![img_6.png](img_6.png)
+
+
 ---
 
 
